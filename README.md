@@ -11,7 +11,9 @@ Nguyên nhân: Do khi chạy lệnh "t apply" đồng nghĩa với việc stop a
 
 #HW: Cải tiến code 06_list để mỗi user có một tag department cụ thể
 
-![Alt](Practice/hw_6.png)
+![Alt](Practice/hw_6_1.png)
+
+![Alt](Practice/hw_6_2.png)
 
 #HW: Fix bug bài lab 08_attach_ebs
 

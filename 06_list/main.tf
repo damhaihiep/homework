@@ -14,8 +14,7 @@ provider "aws" {
 }
 
 resource "aws_iam_user" "users" {
-  for_each   = var.user_names
-  name       = each.key
-  department = each.value.department
+  count = length(var.user_names)
+  name  = var.user_names[count.index].name
 }
 

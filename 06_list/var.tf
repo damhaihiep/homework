@@ -1,18 +1,26 @@
 variable "user_names" {
-  description = "Create IAM users"
-  type = map(object({
-    department = string
+  type = list(object({
+    name = string
+    tags = map(string)
   }))
-  default = {
-    "Paul" = {
-      department = "Sales"
+  default = [
+    {
+      name = "Paul"
+      tags = {
+        "department" = "Sales"
+      }
+    },
+    {
+      name = "Joun"
+      tags = {
+        "department" = "Software"
+      }
+    },
+    {
+      name = "Hai"
+      tags = {
+        "department" = "Accounting"
+      }
     }
-    "John" = {
-      department = "Software"
-    }
-    "Hai" = {
-      department = "Accounting"
-    }
-  }
-
+  ]
 }
