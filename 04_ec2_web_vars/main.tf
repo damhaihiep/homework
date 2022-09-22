@@ -45,11 +45,36 @@ resource "aws_instance" "app_server" {
   ami                    = "ami-0ff89c4ce7de192ea"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.instance.id]
-  user_data              = <<-EOF
-              #!/bin/bash
-              echo ${var.message} > index.html
-              sudo python3 -m http.server 8080 &
-              EOF
+  # user_data              = <<-EOF
+  #             #!/bin/bash
+  #             echo ${var.message} > index.html
+  #             sudo python3 -m http.server 8080 &
+  #             EOF
+  user_data = <<-EOF
+                Content-Type: multipart/mixed; boundary="//"
+                MIME-Version: 1.0
+
+                --//
+                Content-Type: text/cloud-config; charset="us-ascii"
+                MIME-Version: 1.0
+                Content-Transfer-Encoding: 7bit
+                Content-Disposition: attachment; filename="cloud-config.txt"
+
+                #cloud-config
+                cloud_final_modules:
+                - [scripts-user, always]
+
+                --//
+                Content-Type: text/x-shellscript; charset="us-ascii"
+                MIME-Version: 1.0
+                Content-Transfer-Encoding: 7bit
+                Content-Disposition: attachment; filename="userdata.txt"
+
+                #!/bin/bash
+                sudo su
+                echo ${var.message} > index.html
+                sudo python3 -m http.server 8080 &
+                EOF
 
   tags = {
     Name = "PythonWebServer"
